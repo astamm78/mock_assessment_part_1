@@ -1,0 +1,31 @@
+<div class="container">
+  <h1><%= user.name %></h1>
+
+  <% if current_user && user.id == current_user.id %>
+    <form name="add_skill" action="/add_skill" method="post">
+      <p>Skill:</p>
+      <select name="skills" id="skills">
+        <% Skill.all.each do |skill| %>
+          <option value="<%= skill.id %>"><%= skill.name %></option>
+        <% end %>
+      </select><br><br>
+      <input type="text" name="years" placeholder="years of experience">
+      <p>Formal?</p><br>
+      <select name="formal" id="formal">
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select><br>
+      <button type="submit">Submit</button>
+    </form>
+  <% else %>
+    <p>You can only edit your own proficiencies</p>
+  <% end %>
+
+  <hr>
+
+    <h2>Skills:</h2>
+    <% user.proficiencies.each do |p| %>
+      <p>Skill: <%= p.skill.name %> (<%= p.skill.context %>) | Years: <%= p.years %> | Formal?: <%= p.formal %></p>
+    <% end %>
+
+</div>
